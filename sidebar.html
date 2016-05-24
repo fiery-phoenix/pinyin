@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <base target="_top">
+    <link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons1.css">
+</head>
+<body>
+<div class="sidebar branding-below">
+    <form>
+        <div class="block form-group">
+            <textarea style="width: 100%" id="converted-text" rows="10"></textarea>
+        </div>
+
+        <div class="block" id="button-bar">
+            <button class="blue" id="run-conversion">Convert</button>
+            <button id="insert-text">Insert</button>
+        </div>
+    </form>
+</div>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js">
+</script>
+<script>
+    $(function () {
+        $('#run-conversion').click(runConversion);
+        $('#insert-text').click(insertText);
+    });
+
+    function runConversion() {
+        this.disabled = true;
+        $('#error').remove();
+        google.script.run
+                .withSuccessHandler(
+                function (convertedText, element) {
+                    $('#converted-text').val(convertedText);
+                    element.disabled = false;
+                })
+                .withFailureHandler(
+                function (msg, element) {
+                    showError(msg, $('#button-bar'));
+                    element.disabled = false;
+                })
+                .withUserObject(this)
+                .runConversion();
+    }
+
+    function insertText() {
+        this.disabled = true;
+        $('#error').remove();
+        google.script.run
+                .withSuccessHandler(
+                function (returnSuccess, element) {
+                    element.disabled = false;
+                })
+                .withFailureHandler(
+                function (msg, element) {
+                    showError(msg, $('#button-bar'));
+                    element.disabled = false;
+                })
+                .withUserObject(this)
+                .insertText($('#converted-text').val());
+    }
+
+    function showError(msg, element) {
+        var div = $('<div id="error" class="error">' + msg + '</div>');
+        $(element).after(div);
+    }
+</script>
+</body>
+</html>

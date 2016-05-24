@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Pinyin conversion tests</title>
+    <link rel="stylesheet" href="qunit-1.22.0.css">
+</head>
+<body>
+
+<div id="qunit"></div>
+<div id="qunit-fixture"></div>
+<script src="qunit-1.22.0.js"></script>
+<script src="../pinyin.gs"></script>
+<script>
+    QUnit.test("pinyin.isNumericPinyin", function(assert) {
+        assert.ok(pinyin.isNumericPinyin("wo3"));
+        assert.notOk(pinyin.isNumericPinyin("wwo3"));
+        assert.ok(pinyin.isNumericPinyin("hou2"));
+        assert.notOk(pinyin.isNumericPinyin("roo2"));
+        assert.notOk(pinyin.isNumericPinyin("root3"));
+        assert.notOk(pinyin.isNumericPinyin("wo"));
+        assert.notOk(pinyin.isNumericPinyin("woo2"));
+        assert.notOk(pinyin.isNumericPinyin("woai2"));
+        assert.notOk(pinyin.isNumericPinyin("vo2"));
+        assert.ok(pinyin.isNumericPinyin("ma2"));
+        assert.ok(pinyin.isNumericPinyin("sha4"));
+        assert.ok(pinyin.isNumericPinyin("mei2mei2"));
+        assert.ok(pinyin.isNumericPinyin("ge4ge"));
+        assert.notOk(pinyin.isNumericPinyin("ge4tt"));
+    });
+
+    QUnit.test("pinyin.convertSyllable", function(assert) {
+        assert.strictEqual(pinyin.convertSyllable("wo3"), "wŏ");
+        assert.strictEqual(pinyin.convertSyllable("ma2"), "má");
+        assert.strictEqual(pinyin.convertSyllable("mei3"), "měi");
+        assert.strictEqual(pinyin.convertSyllable("guo2"), "guó");
+        assert.strictEqual(pinyin.convertSyllable("Niu2"), "Niú");
+        assert.strictEqual(pinyin.convertSyllable("nai3"), "nǎi");
+        assert.strictEqual(pinyin.convertSyllable("zhe4"), "zhè");
+        assert.strictEqual(pinyin.convertSyllable("shi1"), "shī");
+        assert.strictEqual(pinyin.convertSyllable("Jiu3"), "Jiǔ");
+        assert.strictEqual(pinyin.convertSyllable("liu4"), "liù");
+        assert.strictEqual(pinyin.convertSyllable("shui3"), "shuǐ");
+        assert.strictEqual(pinyin.convertSyllable("nü3"), "nǚ");
+    });
+
+    QUnit.test("pinyin.convertWord", function(assert) {
+        assert.strictEqual(pinyin.convertWord("Niu2nai3"), "Niúnǎi");
+        assert.strictEqual(pinyin.convertWord("Mei3guo2"), "Měiguó");
+        assert.strictEqual(pinyin.convertWord("mei4mei"), "mèimei");
+        assert.strictEqual(pinyin.convertWord("Mei3guo2"), "Měiguó");
+        assert.strictEqual(pinyin.convertWord("zhe4"), "zhè");
+        assert.strictEqual(pinyin.convertWord("lao3shi1"), "lǎoshī");
+        assert.strictEqual(pinyin.convertWord("jiu3"), "jiǔ");
+        assert.strictEqual(pinyin.convertWord("liu4"), "liù");
+        assert.strictEqual(pinyin.convertWord("shui3"), "shuǐ");
+        assert.strictEqual(pinyin.convertWord("nü3"), "nǚ");
+    });
+
+    QUnit.test("pinyin.convertLine", function(assert) {
+        assert.strictEqual(pinyin.convertLine("Jin1tian1 tian1qi4 hen3 hao3"), "Jīntiān tiānqì hěn hǎo");
+    });
+</script>
+</body>
+</html>
