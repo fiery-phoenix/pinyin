@@ -66,12 +66,13 @@ var pinyin = (function () {
         "ua|uo|uai|ui|uan|un|uang|ueng", "üe, üan, ün"];
     var tones = "[1234]";
 
-    var pinyinMatcher = new RegExp("^((" + initials + ")" + "(" + finals.join("|") + ")" + "(" + tones + "*))+$", "i");
-    var numericPinyinMatcher = new RegExp("(" + initials + ")" + "(" + finals.join("|") + ")" + "(" + tones + "+)", "ig");
+    var pinyinMatcher = new RegExp("^((er|((" + initials + ")(" + finals.join("|") + ")r?))(" + tones + "*))+$", "i");
+    var numericPinyinMatcher = new RegExp("(er|((" + initials + ")(" + finals.join("|") + ")r?))(" + tones + "+)", "ig");
 
     var vowelsToVowelsWithTones = {
         a: {1: "ā", 2: "á", 3: "ǎ", 4: "à"},
         o: {1: "ō", 2: "ó", 3: "ŏ", 4: "ò"},
+        E: {1: "Ē", 2: "É", 3: "Ě", 4: "È"},
         e: {1: "ē", 2: "é", 3: "ě", 4: "è"},
         ui: {1: "uī", 2: "uí", 3: "uǐ", 4: "uì"},
         iu: {1: "iū", 2: "iú", 3: "iǔ", 4: "iù"},
@@ -83,6 +84,7 @@ var pinyin = (function () {
     var vowelsRegularExpressions = [
         ["a", /a(.*)\d/i, "$1"],
         ["o", /o(.*)\d/i, "$1"],
+        ["E", /E(r)\d/, "$1"],
         ["e", /e(.*)\d/i, "$1"],
         ["ui", /ui\d/i, ""],
         ["iu", /iu\d/i, ""],

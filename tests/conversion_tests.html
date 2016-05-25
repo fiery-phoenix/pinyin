@@ -27,6 +27,8 @@
         assert.ok(pinyin.isNumericPinyin("mei2mei2"));
         assert.ok(pinyin.isNumericPinyin("ge4ge"));
         assert.notOk(pinyin.isNumericPinyin("ge4tt"));
+        assert.ok(pinyin.isNumericPinyin("guanr3"));
+        assert.ok(pinyin.isNumericPinyin("er2qie3"));
     });
 
     QUnit.test("pinyin.convertSyllable", function(assert) {
@@ -42,6 +44,7 @@
         assert.strictEqual(pinyin.convertSyllable("liu4"), "liù");
         assert.strictEqual(pinyin.convertSyllable("shui3"), "shuǐ");
         assert.strictEqual(pinyin.convertSyllable("nü3"), "nǚ");
+        assert.strictEqual(pinyin.convertSyllable("Er4"), "Èr");
     });
 
     QUnit.test("pinyin.convertWord", function(assert) {
@@ -55,6 +58,9 @@
         assert.strictEqual(pinyin.convertWord("liu4"), "liù");
         assert.strictEqual(pinyin.convertWord("shui3"), "shuǐ");
         assert.strictEqual(pinyin.convertWord("nü3"), "nǚ");
+        assert.strictEqual(pinyin.convertWord("fan4guanr3"), "fànguǎnr");
+        assert.strictEqual(pinyin.convertWord("Er2qie3"), "Érqiě");
+        assert.strictEqual(pinyin.convertWord("yi1er4"), "yīèr");
     });
 
     QUnit.test("pinyin.convertLine", function(assert) {
